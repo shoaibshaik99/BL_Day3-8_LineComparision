@@ -32,14 +32,19 @@
             double length1 = Distance(x1, y1, x2, y2);
             double length2 = Distance(x3, y3, x4, y4);
 
-            // Compare the lengths and display the result
-            if (length1 == length2)
+            // Compare the lengths using the CompareTo method and display the result
+            int comparison = length1.CompareTo(length2);
+            if (comparison == 0)
             {
                 Console.WriteLine("The two line segments have the same length.");
             }
+            else if (comparison > 0)
+            {
+                Console.WriteLine("The first line segment is longer than the second one.");
+            }
             else
             {
-                Console.WriteLine("The two line segments do not have the same length.");
+                Console.WriteLine("The second line segment is longer than the first one.");
             }
         }
     }
