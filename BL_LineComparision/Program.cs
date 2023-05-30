@@ -1,51 +1,94 @@
 ﻿namespace BL_LineComparision
 {
-    internal class Program
+    class Point
     {
-        static double Distance(double x1, double y1, double x2, double y2)
+        public double X { get; set; }
+        public double Y { get; set; }
+
+        public Point(double x, double y)
         {
-            // Use the Pythagorean theorem to find the length of the hypotenuse
-            return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+            X = x;
+            Y = y;
+        }
+    }
+
+    class Line
+    {
+        public Point Start { get; set; }
+        public Point End { get; set; }
+
+        public Line(Point start, Point end)
+        {
+            Start = start;
+            End = end;
         }
 
+        public double Length()
+        {
+            return Math.Sqrt(Math.Pow(End.X - Start.X, 2) + Math.Pow(End.Y - Start.Y, 2));
+        }
+
+        public int CompareTo(Line other)
+        {
+            if (Length() < other.Length())
+                return -1;
+            else if (Length() == other.Length())
+                return 0;
+            else
+                return 1;
+        }
+
+        public bool Equals(Line other)
+        {
+            return Length() == other.Length();
+        }
+    }
+
+    class Program
+    {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Line Comparison Computation Program");
-            // Get the coordinates of the four points from the user
-            Console.WriteLine("Enter the coordinates of the first point of the first line segment (x1, y1):");
-            double x1 = Convert.ToDouble(Console.ReadLine());
-            double y1 = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Enter the coordinates of the first point of line 1 (x y):");
+            string[] input1 = Console.ReadLine().Split();
+            double x1 = double.Parse(input1[0]);
+            double y1 = double.Parse(input1[1]);
+            Point p1 = new Point(x1, y1);
 
-            Console.WriteLine("Enter the coordinates of the second point of the first line segment (x2, y2):");
-            double x2 = Convert.ToDouble(Console.ReadLine());
-            double y2 = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Enter the coordinates of the second point of line 1 (x y):");
+            string[] input2 = Console.ReadLine().Split();
+            double x2 = double.Parse(input2[0]);
+            double y2 = double.Parse(input2[1]);
+            Point p2 = new Point(x2, y2);
+            Line line1 = new Line(p1, p2);
 
-            Console.WriteLine("Enter the coordinates of the first point of the second line segment (x3, y3):");
-            double x3 = Convert.ToDouble(Console.ReadLine());
-            double y3 = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Enter the coordinates of the first point of line 2 (x y):");
+            string[] input3 = Console.ReadLine().Split();
+            double x3 = double.Parse(input3[0]);
+            double y3 = double.Parse(input3[1]);
+            Point p3 = new Point(x3, y3);
 
-            Console.WriteLine("Enter the coordinates of the second point of the second line segment (x4, y4):");
-            double x4 = Convert.ToDouble(Console.ReadLine());
-            double y4 = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Enter the coordinates of the second point of line 2 (x y):");
+            string[] input4 = Console.ReadLine().Split();
+            double x4 = double.Parse(input4[0]);
+            double y4 = double.Parse(input4[1]);
+            Point p4 = new Point(x4, y4);
+            Line line2 = new Line(p3, p4);
 
-            // Call the Distance method to find the lengths of the two line segments
-            double length1 = Distance(x1, y1, x2, y2);
-            double length2 = Distance(x3, y3, x4, y4);
-
-            // Compare the lengths using the CompareTo method and display the result
-            int comparison = length1.CompareTo(length2);
-            if (comparison == 0)
-            {
-                Console.WriteLine("The two line segments have the same length.");
-            }
-            else if (comparison > 0)
-            {
-                Console.WriteLine("The first line segment is longer than the second one.");
-            }
+            int result = line1.CompareTo(line2);
+            if (result < 0)
+                Console.WriteLine("Line 1 is shorter than Line 2.");
+            else if (result == 0)
+                Console.WriteLine("Line 1 is equal in length to Line 2.");
             else
-            {
-                Console.WriteLine("The second line segment is longer than the first one.");
-            }
+                Console.WriteLine("Line 1 is longer than Line 2.");
+
+            /*
+            bool equal = line1.Equals(line2);
+            if (equal)
+                Console.WriteLine("Line 1 is equal in length to Line 2.");
+            else
+                Console.WriteLine("Line 1 is not equal in length to Line 2.");
+            */
         }
     }
 }
